@@ -1,1 +1,236 @@
+<!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的博客</title>
+  <style>
+    /* ============================================================
+       背景图：把下面这一行改成你自己的图片路径即可
+       例：url("images/bg.jpg")  或  url("https://example.com/bg.jpg")
+       如果暂时没有，页面会自动用默认渐变背景，看起来也好看
+    ============================================================ */
+    :root {
+      --bg-image: url("");            /* ← 在这里填入你的背景图 */
+      --fallback-bg: linear-gradient(135deg, #1f2a44 0%, #3b4a6b 50%, #6d5a8e 100%);
+      --overlay: rgba(15, 18, 32, 0.68);   /* 背景上方的暗色遮罩，提高文字可读性 */
+      --accent: #f0a860;                   /* 主题强调色 */
+      --text: #f5f6f8;
+      --muted: rgba(245, 246, 248, 0.72);
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --radius: 16px;
+    }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      background-color: #1f2a44;   /* 兜底颜色 */
+    }
+
+    /* 背景层：优先用图片，没有则用渐变 */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: var(--fallback-bg);
+      background-image: var(--bg-image), var(--fallback-bg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    /* 暗色遮罩 */
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--overlay);
+    }
+
+    /* 顶部导航 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6vw;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 13, 22, 0.35);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 28px; }
+    nav a {
+      color: var(--muted); text-decoration: none; font-size: .95rem;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--text); }
+
+    /* 主体容器 */
+    main { max-width: 820px; margin: 0 auto; padding: 0 6vw; }
+
+    /* 首屏（Hero） */
+    .hero { padding: 12vh 0 8vh; text-align: center; }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 800; letter-spacing: 2px; line-height: 1.2;
+    }
+    .hero p { color: var(--muted); margin-top: 14px; font-size: 1.05rem; }
+    .hero .divider {
+      width: 56px; height: 3px; background: var(--accent);
+      margin: 26px auto; border-radius: 2px;
+    }
+
+    /* 文章列表 */
+    .posts h2 {
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 26px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .posts h2::after {
+      content: ""; flex: 1; height: 1px;
+      background: var(--card-border);
+    }
+
+    .post-card {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(8px);
+      transition: transform .25s, border-color .25s, background .25s;
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .post-meta {
+      color: var(--muted); font-size: .82rem;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .post-meta .tag {
+      background: var(--accent); color: #1f1a12;
+      padding: 2px 10px; border-radius: 20px; font-size: .72rem; font-weight: 600;
+    }
+    .post-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+    .post-card p { color: var(--muted); font-size: .95rem; }
+
+    /* 关于区域 */
+    .about {
+      margin: 60px 0;
+      padding: 40px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+    }
+    .about h2 { font-size: 1.5rem; margin-bottom: 16px; }
+    .about p { color: var(--muted); }
+    .social { display: flex; gap: 18px; margin-top: 22px; }
+    .social a {
+      color: var(--text); text-decoration: none;
+      border: 1px solid var(--card-border); border-radius: 8px;
+      padding: 8px 16px; font-size: .88rem; transition: border-color .2s, color .2s;
+    }
+    .social a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* 页脚 */
+    footer {
+      text-align: center; color: var(--muted); font-size: .82rem;
+      padding: 34px 6vw 40px;
+    }
+
+    /* 移动端导航 */
+    @media (max-width: 600px) {
+      nav { gap: 18px; }
+      nav a { font-size: .88rem; }
+      .about { padding: 28px 24px; }
+    }
+  </style>
+  </head>
+  <body>
+
+    <!-- 背景（图片位置见上方 CSS 里的 --bg-image） -->
+    <div class="bg"></div>
+
+    <!-- 导航栏 -->
+    <header>
+      <div class="logo">我的<span>博客</span></div>
+      <nav>
+        <a href="#home">首页</a>
+        <a href="#posts">文章</a>
+        <a href="#about">关于</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 首屏 -->
+      <section class="hero" id="home">
+        <h1>你好，欢迎来到我的博客</h1>
+        <p>记录生活、技术与思考的小小空间。</p>
+        <div class="divider"></div>
+      </section>
+
+      <!-- 文章列表 -->
+      <section class="posts" id="posts">
+        <h2>最新文章</h2>
+
+        <!-- 复制下面这段即可新增一篇文章 -->
+        <a class="post-card" href="#">
+          <div class="post-meta">
+            <span class="tag">技术</span>
+            <span>2026-09-08</span>
+          </div>
+          <h3>这是第一篇文章的标题</h3>
+          <p>这里是文章的摘要内容，简单介绍这篇文章讲了什么，吸引读者点进去阅读。</p>
+        </a>
+
+        <a class="post-card" href="#">
+          <div class="post-meta">
+            <span class="tag">生活</span>
+            <span>2026-09-01</span>
+          </div>
+          <h3>这是第二篇文章的标题</h3>
+          <p>这里是第二篇文章的摘要内容，可以随便写点什么。</p>
+        </a>
+
+        <a class="post-card" href="#">
+          <div class="post-meta">
+            <span class="tag">随笔</span>
+            <span>2026-08-20</span>
+          </div>
+          <h3>这是第三篇文章的标题</h3>
+          <p>这里是第三篇文章的摘要内容。</p>
+        </a>
+      </section>
+
+      <!-- 关于 -->
+      <section class="about" id="about">
+        <h2>关于我</h2>
+        <p>在这里介绍一下你自己：你是谁、在做什么、这个博客会分享什么内容。把这段文字替换成你的个人介绍即可。</p>
+        <div class="social">
+          <a href="#">GitHub</a>
+          <a href="#">微博</a>
+          <a href="#">邮箱</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 我的博客 · 用 ❤ 记录</footer>
+
+  </body>
+  </html>
