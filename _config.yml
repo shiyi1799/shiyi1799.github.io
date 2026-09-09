@@ -1,3 +1,47 @@
-theme: jekyll-theme-minimal
+# ============================================================
+# 站点基础信息
+# ============================================================
 title: ShiYi的随笔
-description: 欢迎来到ShiYi的博客，如需联系请发邮箱shiyi1799@126.com
+description: 记录生活、技术与思考的小小空间。
+email: shiyi1799@126.com
+author: ShiYi
+lang: zh-CN
+
+# 站点地址（GitHub Pages）
+url: "https://shiyi1799.github.io"
+baseurl: ""
+
+# 文章链接格式（最终形如 /2026/09/08/hello-world/）
+permalink: /:year/:month/:day/:title/
+
+# 时区
+timezone: Asia/Shanghai
+
+# ============================================================
+# 默认 front matter
+# ============================================================
+defaults:
+  - scope:
+      path: ""          # 所有文件
+    values:
+      layout: default   # 默认布局
+  - scope:
+      path: ""          # _posts 目录下的文章
+      type: posts
+    values:
+      layout: post      # 文章布局
+
+# ============================================================
+# Markdown 渲染
+# ============================================================
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# ============================================================
+# 构建时排除的文件/目录
+# ============================================================
+exclude:
+  - README.md
+  - .gitignore
+  - LICENSE
