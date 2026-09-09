@@ -5,9 +5,9 @@
    没有图片时自动使用默认渐变背景
    ============================================================ */
 :root {
-  --bg-image: url("/assets/img/bg.jpg");
+  --bg-image: url("/assets/img/bg.webp");
   --fallback-bg: linear-gradient(135deg, #1f2a44 0%, #3b4a6b 50%, #6d5a8e 100%);
-  --overlay: rgba(15, 18, 32, 0.68);
+  --overlay: rgba(15, 18, 32, 0.45);
   --accent: #f0a860;
   --text: #f5f6f8;
   --muted: rgba(245, 246, 248, 0.72);
