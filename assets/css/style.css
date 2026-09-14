@@ -7,7 +7,7 @@
 :root {
   --bg-image: url("/assets/img/bg.webp");
   --fallback-bg: linear-gradient(135deg, #1f2a44 0%, #3b4a6b 50%, #6d5a8e 100%);
-  --overlay: rgba(15, 18, 32, 0.45);
+  --overlay: rgba(15, 18, 32, 0.65);
   --accent: #f0a860;
   --text: #f5f6f8;
   --muted: rgba(245, 246, 248, 0.72);
@@ -39,6 +39,8 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  filter: blur(8px);       /* 模糊背景，减少对文字的干扰 */
+  transform: scale(1.08);  /* 略微放大，避免模糊后边缘露白 */
 }
 /* 暗色遮罩 */
 .bg::after {
